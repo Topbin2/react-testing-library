@@ -13,7 +13,14 @@ function App() {
       >
         {color ? "Change to blue" : "Change to red"}
       </button>
-      <input type="checkbox" checked={disabled} onChange={() => setDisabled(!disabled)} />
+      <input
+        type="checkbox"
+        id="disable-button-checkbox"
+        defaultChecked={disabled}
+        aria-checked={disabled}
+        onChange={() => setDisabled(!disabled)}
+      />
+      <label htmlFor="disable-button-checkbox">Disable button</label>
     </div>
   );
 }
