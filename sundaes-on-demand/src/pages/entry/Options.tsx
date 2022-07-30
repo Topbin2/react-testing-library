@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
 import ScoopOption from "./ScoopOption";
 
 const Options = ({ optionType }: any) => {
@@ -27,7 +28,7 @@ const Options = ({ optionType }: any) => {
     />
   ));
 
-  return <div>{optionItems}</div>;
+  return <Row>{optionItems}</Row>;
 };
 
 export default Options;
