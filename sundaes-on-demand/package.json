@@ -42,5 +42,8 @@
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-testing-library": "^5.5.1",
     "msw": "^0.44.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
