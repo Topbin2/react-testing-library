@@ -5,7 +5,8 @@ import { pricePerItem } from "../../constants";
 import AlertBanner from "../common/AlertBanner";
 import ScoopOption from "./ScoopOption";
 import ToppingOption from "./ToppingOption";
-import { useOrderDetails } from '../../contexts/OrderDetails';
+import { useOrderDetails } from "../../contexts/OrderDetails";
+import { formatCurrency } from "../../utilities";
 
 interface IProp {
   optionType: "scoops" | "toppings";
@@ -37,15 +38,19 @@ const Options: React.FC<IProp> = ({ optionType }) => {
       key={item.name}
       name={item.name}
       imagePath={item.imagePath}
-      updateItemCount={(itemName, newItemCount) => updateItemCount(itemName, newItemCount, optionType)}
+      updateItemCount={(itemName, newItemCount) =>
+        updateItemCount(itemName, newItemCount, optionType)
+      }
     />
   ));
 
   return (
     <>
       <h2>{title}</h2>
-      <p>{pricePerItem[optionType]} each</p>
-      <p>{title} total: {orderDetails.totals[optionType]}</p>
+      <p>{formatCurrency(pricePerItem[optionType])} each</p>
+      <p>
+        {title} total: {orderDetails.totals[optionType]}
+      </p>
       <Row>{optionItems}</Row>
     </>
   );

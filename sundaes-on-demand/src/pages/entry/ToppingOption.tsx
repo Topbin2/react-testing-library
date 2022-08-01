@@ -1,4 +1,4 @@
-import { Col } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 
 interface IProp {
   name: string;
@@ -18,6 +18,15 @@ const ToppingOption: React.FC<IProp> = ({
         src={`http://localhost:3030/${imagePath}`}
         alt={`${name} topping`}
       />
+      <Form.Group controlId={`${name}-topping-checkbox`}>
+        <Form.Check
+          type="checkbox"
+          onChange={(e) => {
+            updateItemCount(name, e.target.checked ? 1 : 0);
+          }}
+          label={name}
+        />
+      </Form.Group>
     </Col>
   );
 };
