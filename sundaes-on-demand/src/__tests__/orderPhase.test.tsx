@@ -72,7 +72,7 @@ test("order phase for happy path", async () => {
   expect(orderNumber).toBeInTheDocument();
 
   // click new order button on confirmation page
-  const newOrderButton = screen.getByRole("button", { name: "/new order/i" });
+  const newOrderButton = await screen.findByText("Create new order");
   userEvent.click(newOrderButton);
 
   // check that scoops and toppings subtotals have been reset
@@ -85,4 +85,33 @@ test("order phase for happy path", async () => {
   await screen.findByRole("spinbutton", { name: "Vanilla" });
   await screen.findByRole("checkbox", { name: "Cherries" });
   // do we need to await anything to avoid test errors?
+});
+
+test("Toppings header is not on summary page if no toppings ordered", async () => {
+  render(<App />);
+
+  const vanillaInput = await screen.findByRole("spinbutton", {
+    name: "Vanilla",
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, "1");
+
+  const chocolateInput = await screen.findByRole("spinbutton", {
+    name: "Chocolate",
+  });
+  userEvent.clear(chocolateInput);
+  userEvent.type(chocolateInput, "2");
+
+  const orderSummaryButton = screen.getByRole("button", {
+    name: /order sundae/i,
+  });
+  userEvent.click(orderSummaryButton);
+
+  const scoopsHeading = screen.getByRole("heading", { name: "Scoops: $6.00" });
+  expect(scoopsHeading).toBeInTheDocument();
+
+  const toppingsHeading = screen.queryByRole("heading", {
+    name: /Toppings: \$/i,
+  });
+  expect(toppingsHeading).not.toBeInTheDocument();
 });

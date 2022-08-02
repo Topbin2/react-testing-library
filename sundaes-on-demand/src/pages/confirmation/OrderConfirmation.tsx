@@ -8,7 +8,7 @@ interface IProp {
 }
 
 const OrderConfirmation = ({ setOrderPhase }: IProp) => {
-  const [, , resetOrder] = useOrderDetails();
+  const [, ,resetOrder] = useOrderDetails();
   const [orderNumber, setOrderNumber] = useState(null);
 
   useEffect(() => {
