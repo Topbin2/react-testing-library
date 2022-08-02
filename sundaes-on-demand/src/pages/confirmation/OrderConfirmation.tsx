@@ -2,14 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useOrderDetails } from "../../contexts/OrderDetails";
 import { Button } from "react-bootstrap";
+import AlertBanner from "../common/AlertBanner";
 
 interface IProp {
   setOrderPhase?: any;
 }
 
 const OrderConfirmation = ({ setOrderPhase }: IProp) => {
-  const [, ,resetOrder] = useOrderDetails();
+  const [, , resetOrder] = useOrderDetails();
   const [orderNumber, setOrderNumber] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     axios
@@ -19,6 +21,7 @@ const OrderConfirmation = ({ setOrderPhase }: IProp) => {
       })
       .catch((error) => {
         // TODO handle error here
+        setError(true);
       });
   }, []);
 
@@ -26,6 +29,8 @@ const OrderConfirmation = ({ setOrderPhase }: IProp) => {
     resetOrder();
     setOrderPhase("inProgress");
   }
+
+  if (error) return <AlertBanner />;
 
   if (orderNumber) {
     return (
