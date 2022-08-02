@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
 interface IProp {
@@ -8,10 +8,21 @@ interface IProp {
 }
 
 const ScoopOption: React.FC<IProp> = ({ name, imagePath, updateItemCount }) => {
+  const [isValid, setIsValid] = useState(true);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateItemCount(name, event.target.value);
+    const currentValue = event.target.value;
+    const currentValueFloat = parseFloat(currentValue);
+    const valueIsValid =
+      0 <= currentValueFloat &&
+      currentValueFloat <= 10 &&
+      Math.floor(currentValueFloat) === currentValueFloat;
+
+    setIsValid(valueIsValid);
+
+    if (valueIsValid) updateItemCount(name, currentValue);
   };
-  
+
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: "center" }}>
       <img
@@ -32,6 +43,7 @@ const ScoopOption: React.FC<IProp> = ({ name, imagePath, updateItemCount }) => {
             type="number"
             defaultValue={0}
             onChange={handleChange}
+            isInvalid={!isValid}
           />
         </Col>
       </Form.Group>

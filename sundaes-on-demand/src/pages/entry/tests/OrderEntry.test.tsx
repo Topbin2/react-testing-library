@@ -2,7 +2,6 @@ import {
   screen,
   render,
   waitFor,
-  act,
 } from "../../../test-utils/testing-library-utils";
 import { rest } from "msw";
 import { server } from "../../../mocks/server";
@@ -44,3 +43,4 @@ test("scoops이 선택되지 않으면 order 버튼이 비활성화 됩니다.",
   userEvent.type(vanillaInput, "0");
   expect(orderButton).toBeDisabled();
 });
+
