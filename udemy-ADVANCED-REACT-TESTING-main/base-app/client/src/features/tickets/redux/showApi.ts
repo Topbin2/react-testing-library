@@ -12,9 +12,9 @@ export const showApi = createApi({
   endpoints: (builder) => ({
     getAllShows: builder.query<Array<Show>, null>({
       query: () => "",
-      transformResponse: (data: { shows: Array<Show> }) => {
+      transformResponse: (data: Array<Show>) => {
         const today = dayjs();
-        return data.shows.filter((show) => dayjs(show.scheduledAt) >= today);
+        return data.filter((show) => dayjs(show.scheduledAt) >= today);
       },
     }),
     getShowById: builder.query<Show, string>({
